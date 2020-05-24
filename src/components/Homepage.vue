@@ -1,6 +1,6 @@
 <template>
 	<div class="main-section">
-		<Questions @check:answer="checkAnswer" :currentQuestion="currentQuestion"/>
+		<Questions @check:answer="checkAnswer" :currentQuestion="currentQuestion" :score="score"/>
 	</div>
 </template>
 
@@ -13,11 +13,12 @@ export default {
     Questions
   },
   props: {
-    currentQuestion: Object
+    currentQuestion: Object,
+    score: Number
   },
   methods: {
-    checkAnswer: function (answer) {
-		this.$emit('check:answer', answer)
+    checkAnswer: function (correctAnswer, selectedAnswer) {
+		this.$emit('check:answer', correctAnswer, selectedAnswer)
     }
   }
 }
@@ -25,7 +26,7 @@ export default {
 
 <style scoped>
 .main-section {
-	width: 800px;
+	width: auto;
 	color: #222;
 	padding: 20px;
 	background-color: #fff;

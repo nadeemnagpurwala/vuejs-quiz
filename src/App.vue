@@ -1,8 +1,8 @@
 <template>
-  <div id="app" :style="{ backgroundColor: color}">
+  <div id="app" :style="{ backgroundColor: bgcolor}">
     <div :class="{ 'loader': loading }"></div>
-    <h2 :style="{ color: textcolor}">{{ title }}</h2>
-    <Homepage v-if="!loading" @check:answer="checkAnswer" :currentQuestion="questions[index]" />
+    <h2 :style="{ color: textcolor}" class="title">{{ title }}</h2>
+    <Homepage v-if="!loading" @check:answer="checkAnswer" :currentQuestion="questions[index]" :score="score" />
   </div>
 </template>
 
@@ -17,11 +17,12 @@ export default {
   data: function() {
     return {
         title: 'Loading.Please Wait ...',
-        color: '#ecf0f1',
+        bgcolor: '#ecf0f1',
         textcolor: '#222',
         loading: false,
         questions:[],
-        index: 0
+        index: 0,
+        score: 0
     }
   },
   mounted() {
@@ -43,15 +44,17 @@ export default {
         console.error(error)
       }
     },
-    checkAnswer: function (answer) {
-      if (answer === 'true') {
-        this.color = '#41b883'
+    checkAnswer: function (correctAnswer, selectedAnswer) {
+      if (correctAnswer === selectedAnswer) {
+        this.bgcolor = '#41b883'
         this.textcolor = '#fff'
+        this.score++
       }
       else {
-        this.color = '#dc3545'
+        this.bgcolor = '#dc3545'
         this.textcolor = '#fff'
       }
+      this.index++
     }
   }
 }
@@ -73,10 +76,9 @@ html, body {
   text-align: center;
   display: flex;
   height: 100%;
-  justify-content: center;
+  /*justify-content: center;*/
   align-items: center;
   flex-direction: column;
-  margin-top: -30px;
 }
 
 .loader{
@@ -88,5 +90,9 @@ html, body {
   background: url('../public/loader.gif') 50% 50% no-repeat rgb(249,249,249);
   background-size: 50px;
   opacity: 0.5;
+}
+
+.title {
+  margin-top: 3rem;
 }
 </style>

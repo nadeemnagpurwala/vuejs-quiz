@@ -1,12 +1,20 @@
 <template>
-  <div class="questions" v-if="currentQuestion !== undefined">
-    <h4>SCORE : {{ score }}</h4>
-    <div class="question">
-        <span v-html="currentQuestion.question"></span>
+  <div>
+    <div class="questions" v-if="currentQuestion !== undefined">
+      <h4>SCORE : {{ score }}</h4>
+      <div class="question">
+          <span v-html="currentQuestion.question"></span>
+      </div>
+      <div>
+        <button class="btn btn-true" @click="$emit('check:answer', currentQuestion.correct_answer,'True')">True</button>
+        <button class="btn btn-false" @click="$emit('check:answer', currentQuestion.correct_answer,'False')">False</button>
+      </div>
     </div>
-    <div>
-      <button class="btn btn-true" @click="$emit('check:answer', 'true')">True</button>
-      <button class="btn btn-false" @click="$emit('check:answer', 'false')">False</button>
+    <div v-else>
+      <h3>Thanks for the participation !</h3>
+      <span>Your total score is {{ score }} / 5</span>
+      <br>
+      <button class="btn btn-default" @click="reloadPage()">Play Again</button>
     </div>
   </div>
 </template>
@@ -16,12 +24,13 @@ export default {
     name:"Questions",
     props: {
       currentQuestion: Object,
-      loading: Boolean
+      loading: Boolean,
+      score: Number
     },
-    data: function() {
-        return {
-          score: 0
-        }
+    methods: {
+      reloadPage: function () {
+        location.reload()
+      }
     }
 }
 </script>
@@ -64,6 +73,18 @@ export default {
   .btn-false:hover {
     background-color: #dc3545;
     border: 2px solid #dc3545;
+    color: #fff;
+  }
+
+  .btn-default {
+    background-color: #fff;
+    border: 2px solid #222;
+    color: #222;
+  }
+
+  .btn-default:hover {
+    background-color: #222;
+    border: 2px solid #222;
     color: #fff;
   }
 </style>
