@@ -1,8 +1,8 @@
 <template>
-  <div class="questions">
+  <div class="questions" v-if="currentQuestion !== undefined">
     <h4>SCORE : {{ score }}</h4>
     <div class="question">
-      Vuejs is cool !
+        <span v-html="currentQuestion.question"></span>
     </div>
     <div>
       <button class="btn btn-true" @click="$emit('check:answer', 'true')">True</button>
@@ -14,6 +14,10 @@
 <script>
 export default {
     name:"Questions",
+    props: {
+      currentQuestion: Object,
+      loading: Boolean
+    },
     data: function() {
         return {
           score: 0
@@ -25,7 +29,7 @@ export default {
 <style scoped>
   .question {
     margin-top: 3rem;
-    font-size: 32px;
+    font-size: 25px;
   }
 
   .btn {

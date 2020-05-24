@@ -1,6 +1,8 @@
 <template>
   <div id="app" :style="{ backgroundColor: color}">
-    <Homepage @check:answer="checkAnswer"/>
+    <div :class="{ 'loader': loading }"></div>
+    <h2 :style="{ color: textcolor}">{{ title }}</h2>
+    <Homepage v-if="!loading" @check:answer="checkAnswer" :currentQuestion="questions[index]" />
   </div>
 </template>
 
@@ -14,16 +16,41 @@ export default {
   },
   data: function() {
     return {
-        color: '#ecf0f1'
+        title: 'Loading.Please Wait ...',
+        color: '#ecf0f1',
+        textcolor: '#222',
+        loading: false,
+        questions:[],
+        index: 0
     }
   },
+  mounted() {
+    this.getQuestions()
+  },
   methods: {
+    async getQuestions() {
+      this.loading = true
+      try {
+          const response = await fetch(
+            'https://opentdb.com/api.php?amount=5&type=boolean'
+          )
+          const data = await response.json()
+          this.questions = data.results
+          this.loading = false
+          this.title = "Welcome To Vuejs Quiz Application"
+        }
+      catch (error) {
+        console.error(error)
+      }
+    },
     checkAnswer: function (answer) {
       if (answer === 'true') {
         this.color = '#41b883'
+        this.textcolor = '#fff'
       }
       else {
         this.color = '#dc3545'
+        this.textcolor = '#fff'
       }
     }
   }
@@ -49,5 +76,17 @@ html, body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: -30px;
+}
+
+.loader{
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  background: url('../public/loader.gif') 50% 50% no-repeat rgb(249,249,249);
+  background-size: 50px;
+  opacity: 0.5;
 }
 </style>

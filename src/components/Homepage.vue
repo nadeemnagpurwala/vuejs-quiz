@@ -1,6 +1,6 @@
 <template>
 	<div class="main-section">
-		<Questions @check:answer="checkAnswer" />
+		<Questions @check:answer="checkAnswer" :currentQuestion="currentQuestion"/>
 	</div>
 </template>
 
@@ -12,6 +12,9 @@ export default {
   components: {
     Questions
   },
+  props: {
+    currentQuestion: Object
+  },
   methods: {
     checkAnswer: function (answer) {
 		this.$emit('check:answer', answer)
@@ -22,9 +25,11 @@ export default {
 
 <style scoped>
 .main-section {
+	width: 800px;
 	color: #222;
 	padding: 20px;
 	background-color: #fff;
 	border-radius: .5rem;
+	margin-top: 2rem;
 }
 </style>
