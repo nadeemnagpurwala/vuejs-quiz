@@ -1,28 +1,53 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" :style="{ backgroundColor: color}">
+    <Homepage @check:answer="checkAnswer"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Homepage from './components/Homepage.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Homepage
+  },
+  data: function() {
+    return {
+        color: '#ecf0f1'
+    }
+  },
+  methods: {
+    checkAnswer: function (answer) {
+      if (answer === 'true') {
+        this.color = '#41b883'
+      }
+      else {
+        this.color = '#dc3545'
+      }
+    }
   }
 }
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 </style>
