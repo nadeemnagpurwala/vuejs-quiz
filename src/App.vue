@@ -1,66 +1,23 @@
 <template>
-  <div id="app" :style="{ backgroundColor: bgcolor}">
-    <div :class="{ 'loader': loading }"></div>
-    <h2 :style="{ color: textcolor}" class="title">{{ title }}</h2>
-    <Homepage v-if="!loading" @check:answer="checkAnswer" :currentQuestion="questions[index]" :score="score" :currentIndex="index" :correct="correct" :incorrect="incorrect"/>
-  </div>
+	<div>
+		<Header />
+		<div id="app">
+			<router-view/>
+		</div>
+		<Footer />
+	</div>
 </template>
 
 <script>
-import Homepage from './components/Homepage.vue'
+	import Header from '@/components/layout/Header.vue'
+	import Footer from '@/components/layout/Footer.vue'
 
-export default {
-  name: 'App',
-  components: {
-    Homepage
-  },
-  data: function() {
-    return {
-        title: 'Loading.Please Wait ...',
-        bgcolor: '#ecf0f1',
-        textcolor: '#222',
-        loading: false,
-        questions:[],
-        index: 0,
-        score: 0,
-        correct: 0,
-        incorrect: 0
-    }
-  },
-  mounted() {
-    this.getQuestions()
-  },
-  methods: {
-    async getQuestions() {
-      this.loading = true
-      try {
-          const response = await fetch(
-            'https://opentdb.com/api.php?amount=5&type=boolean'
-          )
-          const data = await response.json()
-          this.questions = data.results
-          this.loading = false
-          this.title = "Welcome To Vuejs Quiz Application"
-        }
-      catch (error) {
-        console.error(error)
-      }
-    },
-    checkAnswer: function (correctAnswer, selectedAnswer) {
-      if (correctAnswer === selectedAnswer) {
-        this.bgcolor = '#41b883'
-        this.textcolor = '#fff'
-        this.score++
-        this.correct++
-      }
-      else {
-        this.bgcolor = '#dc3545'
-        this.textcolor = '#fff'
-        this.incorrect++
-      }
-      this.index++
-    }
-  }
+	export default {
+	name: 'App',
+	components: {
+		Header,
+		Footer
+	}
 }
 </script>
 
@@ -71,18 +28,59 @@ html, body {
   height: 100%;
   margin: 0;
   padding: 0;
+  background: #ecf0f1;
   font-family: 'Nanum Gothic', sans-serif;
 }
 
 #app {
-  -webkit-font-smoothing: antialiased;
+  webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   display: flex;
   height: 100%;
-  /*justify-content: center;*/
+  justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.btn {
+	cursor: pointer;
+	background-color: #222;
+	color: #fff;
+	border: 2px solid #222;
+	display: inline-block;
+	padding: .8rem 3rem;
+	border-radius: 4px;
+	margin: 3rem;
+}
+
+.btn-default {
+	background-color: #fff;
+	border: 2px solid #34495e;
+	color: #34495e;
+}
+
+.btn-default:hover {
+	background-color: #34495e;
+	border: 2px solid #34495e;
+	color: #fff;
+}
+
+.btn-success {
+	background-color: #fff;
+	border: 2px solid #41b883;
+	color: #41b883;
+}
+
+.btn-success:hover {
+	background-color: #41b883;
+	border: 2px solid #41b883;
+	color: #fff;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
 }
 
 .loader{
@@ -94,9 +92,5 @@ html, body {
   background: url('../public/loader.gif') 50% 50% no-repeat rgb(249,249,249);
   background-size: 50px;
   opacity: 0.5;
-}
-
-.title {
-  margin-top: 3rem;
 }
 </style>
