@@ -1,6 +1,6 @@
 <template>
 	<div class="main-section">
-		<Questions @check:answer="checkAnswer" :currentQuestion="currentQuestion" :score="score"/>
+		<Questions @check:answer="checkAnswer" :currentQuestion="currentQuestion" :currentIndex="currentIndex" :score="score" :correct="correct" :incorrect="incorrect"/>
 	</div>
 </template>
 
@@ -14,7 +14,10 @@ export default {
   },
   props: {
     currentQuestion: Object,
-    score: Number
+    currentIndex: Number,
+    score: Number,
+    correct: Number,
+    incorrect: Number
   },
   methods: {
     checkAnswer: function (correctAnswer, selectedAnswer) {

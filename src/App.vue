@@ -2,7 +2,7 @@
   <div id="app" :style="{ backgroundColor: bgcolor}">
     <div :class="{ 'loader': loading }"></div>
     <h2 :style="{ color: textcolor}" class="title">{{ title }}</h2>
-    <Homepage v-if="!loading" @check:answer="checkAnswer" :currentQuestion="questions[index]" :score="score" />
+    <Homepage v-if="!loading" @check:answer="checkAnswer" :currentQuestion="questions[index]" :score="score" :currentIndex="index" :correct="correct" :incorrect="incorrect"/>
   </div>
 </template>
 
@@ -22,7 +22,9 @@ export default {
         loading: false,
         questions:[],
         index: 0,
-        score: 0
+        score: 0,
+        correct: 0,
+        incorrect: 0
     }
   },
   mounted() {
@@ -49,10 +51,12 @@ export default {
         this.bgcolor = '#41b883'
         this.textcolor = '#fff'
         this.score++
+        this.correct++
       }
       else {
         this.bgcolor = '#dc3545'
         this.textcolor = '#fff'
+        this.incorrect++
       }
       this.index++
     }
