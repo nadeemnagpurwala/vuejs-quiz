@@ -15,8 +15,8 @@
             <span v-html="currentQuestion.question"></span>
         </div>
         <div>
-          <button class="btn btn-true" @click="$emit('check:answer', currentQuestion.correct_answer,'True')">True</button>
-          <button class="btn btn-false" @click="$emit('check:answer', currentQuestion.correct_answer,'False')">False</button>
+          <button class="btn btn-answer" @click="$emit('check:answer', currentQuestion.correct_answer,'True')">True</button>
+          <button class="btn btn-answer" @click="$emit('check:answer', currentQuestion.correct_answer,'False')">False</button>
         </div>
       </div>
       <div v-else>
@@ -65,27 +65,15 @@ export default {
     margin: 3rem;
   }
 
-  .btn-true {
+  .btn-answer {
     background-color: #fff;
-    border: 2px solid #41b883;
-    color: #41b883;
+    border: 2px solid #222;
+    color: #222;
   }
 
-  .btn-true:hover {
-    background-color: #41b883;
-    border: 2px solid #41b883;
-    color: #fff;
-  }
-
-  .btn-false {
-    background-color: #fff;
-    border: 2px solid #dc3545;
-    color: #dc3545;
-  }
-
-  .btn-false:hover {
-    background-color: #dc3545;
-    border: 2px solid #dc3545;
+  .btn-answer:active {
+    background-color: #222;
+    border: 2px solid #222;
     color: #fff;
   }
 
